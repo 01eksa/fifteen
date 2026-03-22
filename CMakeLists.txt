@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 4.1)
-project(15)
+cmake_minimum_required(VERSION 3.16)
+project(Fifteen)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_AUTOMOC ON)
@@ -24,3 +24,6 @@ target_link_libraries(Fifteen
         Qt::Widgets
 )
 
+if(WIN32)
+    set_target_properties(Fifteen PROPERTIES WIN32_EXECUTABLE TRUE)
+endif()
