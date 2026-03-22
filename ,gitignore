@@ -28,6 +28,7 @@ Fifteen
 
 # IDE
 .idea/
+.vs/
 .vscode/
 *.user
 *.creator
