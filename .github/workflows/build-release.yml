@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt6
+        run: sudo apt-get install -y qt6-base-dev
+
+      - name: Build
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: build/Fifteen
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.10.0'
+
+      - name: Build
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release
+
+      - name: Deploy DLLs
+        run: windeployqt --release build\Release\Fifteen.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: build/Release/
+
+  release:
+    needs: [ build-linux, build-windows ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - name: Zip artifacts
+        run: |
+          zip -j Fifteen_linux_x64_${{ github.ref_name }}.zip linux/Fifteen
+          zip -r Fifteen_win_x64_${{ github.ref_name }}.zip windows/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Fifteen_linux_x64_${{ github.ref_name }}.zip
+            Fifteen_win_x64_${{ github.ref_name }}.zip
