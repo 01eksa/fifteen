@@ -1,0 +1,30 @@
+# Fifteen Puzzle
+
+A classic [15-puzzle](https://en.wikipedia.org/wiki/15_puzzle) game built with C++20 and Qt6.
+
+![fifteen-preview](./images/1.png)
+
+## Requirements
+
+- C++20 compiler (GCC 12+, Clang 14+, MSVC 2022+)
+- Qt 6.x
+- CMake 3.16+
+
+## Build
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+./build/Fifteen
+```
+
+## Architecture
+
+The project follows a simple MVC pattern:
+
+| File           | Role                                                |
+|----------------|-----------------------------------------------------|
+| `model.h`      | Game logic — board state, moves, win check, shuffle |
+| `view.h`       | Qt UI — widgets, layout, timer display              |
+| `controller.h` | Connects model and view via Qt signals              |
+| `main.cpp`     | Entry point                                         |
