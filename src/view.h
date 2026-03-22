@@ -28,6 +28,7 @@ namespace Fifteen {
 
         QTimer timer;
         QElapsedTimer elapsedTimer;
+        qint64 accumulatedTime = 0;
 
         QPushButton pauseButton;
         bool onPause = false;
@@ -122,7 +123,7 @@ namespace Fifteen {
         }
 
         void updateTime() {
-            const auto deltaTime = elapsedTimer.elapsed() / 1000;
+            const auto deltaTime = (accumulatedTime + elapsedTimer.elapsed()) / 1000;
             const int minutes = deltaTime / 60;
             const int seconds = deltaTime % 60;
             const QString timeStr = QString("%1:%2")
@@ -138,10 +139,12 @@ namespace Fifteen {
             if (onPause) {
                 pauseButton.setText("Pause");
                 timer.start(1000);
+                elapsedTimer.start();
             }
             else {
                 pauseButton.setText("Continue");
                 timer.stop();
+                accumulatedTime += elapsedTimer.elapsed();
             }
 
             onPause = !onPause;
