@@ -40,11 +40,8 @@ namespace Fifteen {
 
         View(int argc, char *argv[]) : app(argc, argv) {
             window.setWindowTitle("Fifteen Puzzle");
-            //window.resize(320, 360);
             window.setWindowIcon(QIcon("../assets/15.png"));
 
-            // mainLayout.setContentsMargins(0, 0, 0, 0);
-            // mainLayout.setSpacing(0);
 
             mainLayout.addLayout(&menuLayout, 0, 0);
             mainLayout.addLayout(&fieldLayout, 1, 0);
