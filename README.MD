@@ -7,7 +7,7 @@ A classic [15-puzzle](https://en.wikipedia.org/wiki/15_puzzle) game built with C
 ## Requirements
 
 - C++20 compiler (GCC 12+, Clang 14+, MSVC 2022+)
-- Qt 6.x
+- Qt 6.2+
 - CMake 3.16+
 
 ## Build
