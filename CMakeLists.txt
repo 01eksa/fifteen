@@ -24,6 +24,13 @@ target_link_libraries(Fifteen
         Qt::Widgets
 )
 
+qt_add_resources(Fifteen "assets"
+        PREFIX "/"
+        BASE "assets"
+        FILES assets/15.png
+)
+
 if(WIN32)
     set_target_properties(Fifteen PROPERTIES WIN32_EXECUTABLE TRUE)
+    target_sources(Fifteen PRIVATE assets/icon.rc)
 endif()

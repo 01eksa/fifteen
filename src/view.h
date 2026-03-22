@@ -39,9 +39,10 @@ namespace Fifteen {
         std::array<std::array<QPushButton*, SIZE>, SIZE> buttons{};
 
         View(int argc, char *argv[]) : app(argc, argv) {
-            window.setWindowTitle("Fifteen Puzzle");
-            window.setWindowIcon(QIcon("../assets/15.png"));
+            QApplication::setStyle("Fusion");
 
+            window.setWindowTitle("Fifteen Puzzle");
+            window.setWindowIcon(QIcon(":/15.png"));
 
             mainLayout.addLayout(&menuLayout, 0, 0);
             mainLayout.addLayout(&fieldLayout, 1, 0);
@@ -52,10 +53,20 @@ namespace Fifteen {
             menuLayout.addWidget(&pauseButton, 0, 1);
             menuLayout.addWidget(&statusLabel, 0, 2);
             menuLayout.addWidget(&timeLabel, 0, 3);
+            menuLayout.setSpacing(0);
+
+
+            newGameButton.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            newGameButton.setStyleSheet("margin: 0; padding: 0; font-size: 12px; min-width: 32px; min-height: 24px; max-height: 32px");
+            pauseButton.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            pauseButton.setStyleSheet("margin: 0; padding: 0; font-size: 12px; min-width: 32px; min-height: 24px; max-height: 32px");
+
+            statusLabel.setAlignment(Qt::AlignCenter);
+            statusLabel.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+            timeLabel.setAlignment(Qt::AlignCenter);
+            timeLabel.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
             newGameButton.setText("New Game");
-            statusLabel.setAlignment(Qt::AlignCenter);
-            timeLabel.setAlignment(Qt::AlignCenter);
             reset();
 
             fieldLayout.setContentsMargins(0, 0, 0, 0);
@@ -79,7 +90,7 @@ namespace Fifteen {
                 fieldLayout.setRowStretch(y, 1);
 
                 for (int x = 0; x < SIZE; x++) {
-                    QPushButton *button = new QPushButton(&window);
+                    auto *button = new QPushButton(&window);
                     button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
                     button->setStyleSheet("margin: 0; padding: auto; font-size: 18px; min-width: 32px; min-height: 32px");
                     buttons[y][x] = button;
@@ -121,8 +132,8 @@ namespace Fifteen {
 
         void updateTime() {
             const auto deltaTime = (accumulatedTime + elapsedTimer.elapsed()) / 1000;
-            const int minutes = deltaTime / 60;
-            const int seconds = deltaTime % 60;
+            const auto minutes = deltaTime / 60;
+            const auto seconds = deltaTime % 60;
             const QString timeStr = QString("%1:%2")
                     .arg(minutes, 2, 10, QChar('0'))
                     .arg(seconds, 2, 10, QChar('0'));
@@ -150,7 +161,7 @@ namespace Fifteen {
         int run(const Field &field) {
             drawField(field);
             window.show();
-            return app.exec();
+            return QApplication::exec();
         }
     };
 }
