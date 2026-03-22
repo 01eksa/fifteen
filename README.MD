@@ -14,8 +14,17 @@ A classic [15-puzzle](https://en.wikipedia.org/wiki/15_puzzle) game built with C
 
 ```bash
 cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+cmake --build build --config Release
+```
+
+**Linux / macOS:**
+```bash
 ./build/Fifteen
+```
+
+**Windows:**
+```bat
+.\build\Release\Fifteen.exe
 ```
 
 ## Architecture
