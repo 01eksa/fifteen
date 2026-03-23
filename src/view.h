@@ -199,6 +199,7 @@ namespace Fifteen {
                 enableField();
                 timer.start(1000);
                 elapsedTimer.start();
+                updateTime();
             }
             else {
                 pauseButton.setText("Continue");
