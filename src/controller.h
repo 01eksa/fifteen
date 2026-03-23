@@ -11,22 +11,17 @@ namespace Fifteen {
 
     public:
         Controller(int argc, char *argv[]) : view(argc, argv) {
-            QObject::connect(&view.newGameButton, &QPushButton::clicked, [this] {
+            view.connectNewGameButton([this] {
                 model.shuffle();
                 view.reset();
                 view.drawField(model.getField());
             });
 
-            for (auto y = 0u; y < SIZE; ++y) {
-                for (auto x = 0u; x < SIZE; ++x) {
-                    auto button = view.buttons[y][x];
-                    QObject::connect(button, &QPushButton::clicked, [this, x, y] {
-                        model.move(Coords(x, y));
-                        view.drawField(model.getField());
-                        if (model.checkWin()) view.win();
-                    });
-                }
-            }
+            view.connectField([this] (int x, int y) {
+                model.move(Coords(x, y));
+                view.drawField(model.getField());
+                if (model.checkWin()) view.win();
+            });
         }
 
         int run() {
