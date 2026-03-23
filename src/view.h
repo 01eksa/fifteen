@@ -115,6 +115,7 @@ namespace Fifteen {
         }
 
         void reset() {
+            accumulatedTime = 0;
             statusLabel.setText("Good luck!");
             pauseButton.setText("Pause");
             timeLabel.setText("00:00");
