@@ -43,10 +43,7 @@ namespace Fifteen {
         View(int argc, char *argv[]) : app(argc, argv) {
             QApplication::setStyle("Fusion");
 
-            window.setWindowTitle("Fifteen Puzzle");
-            window.setWindowIcon(QIcon(":/15.png"));
-            window.setLayout(&mainLayout);
-
+            initWindow();
             initLayouts();
             initMenu();
             initField();
@@ -113,6 +110,12 @@ namespace Fifteen {
         }
 
     private:
+
+        void initWindow() {
+            window.setWindowTitle("Fifteen Puzzle");
+            window.setWindowIcon(QIcon(":/15.png"));
+            window.setLayout(&mainLayout);
+        }
 
         void initLayouts() {
             mainLayout.addLayout(&menuLayout, 0, 0);
